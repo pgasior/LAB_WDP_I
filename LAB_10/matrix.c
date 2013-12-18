@@ -28,11 +28,11 @@ void saveMatrix(char* filename,int rowCount, int colCount, double* pMatrix)
     FILE *f;
     int row, col;
     f=fopen(filename,"w");
-    fprintf(f,"%d  %d",rowCount,colCount);
+    fprintf(f,"%d %d\n",rowCount,colCount);
     for(row=0;row<rowCount;row++)
     {
 	for(col=0;col<colCount;col++)
-	    fprintf(f,"%lf",getVal(rowCount,colCount,pMatrix,row,col));
+	    fprintf(f,"%8.1lf",getVal(rowCount,colCount,pMatrix,row,col));
 	fprintf(f,"\n");
     }
     fclose(f);
@@ -94,6 +94,7 @@ int main()
 	double* m3 = product(m1rowCount,m1colCount,m2rowCount,m2colCount, m1,m2);
 	printf("m1*m2:\n");
 	printMatrix(m1rowCount,m2colCount,m3);
+	saveMatrix("m3.txt",m1rowCount,m2colCount,m3);
 	free(m3);
     }
     else
