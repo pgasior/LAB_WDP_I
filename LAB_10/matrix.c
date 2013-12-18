@@ -7,11 +7,11 @@ double* createMatrix(int rowCount,int colCount)
 }
 void setVal(int rowCount, int colCount, double* matrix, int row, int col,double val)
 {
-    *(matrix+row*rowCount+col) = val;
+    *(matrix+row*(rowCount-1)+col) = val;
 }
 double getVal(int rowCount, int colCount, double* matrix, int row, int col)
 {
-    return  *(matrix+row*rowCount+col);
+    return  *(matrix+row*(rowCount-1)+col);
 }
 void printMatrix(int rowCount, int colCount, double* pMatrix)
 {
@@ -44,7 +44,6 @@ double* loadMatrix(char* filename,int* pRowCount, int* pColCount)
     f=fopen(filename,"r");
     fscanf(f,"%d",pRowCount);  
     fscanf(f,"%d",pColCount);
-    printf("rowCount: %d\ncolCount: %d\n",*pRowCount,*pColCount);
     double* result=createMatrix(*pRowCount,*pColCount);
     double val;
     for(row=0;row<*pRowCount;row++)
@@ -54,6 +53,7 @@ double* loadMatrix(char* filename,int* pRowCount, int* pColCount)
 	    fscanf(f,"%lf",&val);
 	    setVal(*pRowCount,*pColCount,result,row,col,val);
 	}
+
 	
     }
     fclose(f);
@@ -65,5 +65,6 @@ int main()
     int rowCount,colCount;
     p1=loadMatrix("Dane.txt",&rowCount,&colCount);
     printMatrix(rowCount,colCount,p1);
+    free(p1);
     return 0;
 }
